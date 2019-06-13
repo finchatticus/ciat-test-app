@@ -29,6 +29,9 @@ dependencies {
     implementation dependencies.appCompat
     implementation dependencies.constraintLayout
     implementation dependencies.material
+    implementation dependencies.ankoSdk
+    implementation dependencies.ankoAppCompat
+    implementation dependencies.ankoDesign
     testImplementation dependencies.junit
     androidTestImplementation dependencies.runner
     androidTestImplementation dependencies.espresso
