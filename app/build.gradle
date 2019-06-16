@@ -34,15 +34,20 @@ dependencies {
     Map<String, String> dependencies = globalConf.dependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation dependencies.kotlin
+    implementation dependencies.coroutines
+    implementation dependencies.coroutinesDroid
     implementation dependencies.appCompat
     implementation dependencies.constraintLayout
     implementation dependencies.material
+    implementation dependencies.recyclerView
     implementation dependencies.ankoSdk
     implementation dependencies.ankoAppCompat
     implementation dependencies.ankoDesign
+    implementation dependencies.ankoRecyclerView
     implementation dependencies.retrofit
     implementation dependencies.retrofitGson
     implementation dependencies.okHttpLogging
+    implementation dependencies.picasso
     testImplementation dependencies.junit
     androidTestImplementation dependencies.runner
     androidTestImplementation dependencies.espresso

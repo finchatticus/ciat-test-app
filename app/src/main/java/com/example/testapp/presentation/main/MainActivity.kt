@@ -5,6 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapp.R
+import com.example.testapp.presentation.users.UsersFragment
+import com.example.testapp.presentation.util.addFragment
 import org.jetbrains.anko.setContentView
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         ui.setContentView(this)
         setSupportActionBar(ui.toolbar)
+        addFragment { UsersFragment() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
