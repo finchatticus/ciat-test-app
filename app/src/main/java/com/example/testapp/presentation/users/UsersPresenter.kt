@@ -10,8 +10,8 @@ import kotlin.coroutines.CoroutineContext
 class UsersPresenter(private var v: UsersContract.View?, private val userRepository: UserRepository = UserRepositoryImpl) : UsersContract.Presenter, CoroutineScope {
 
     private val parentJob = Job()
-    private var currentPage: Int = 0
-    private var totalPages: Int = 1
+    private var nextPage: Int = 1
+    private var totalPages: Int = 0
 
     init {
         v?.presenter = this
@@ -23,13 +23,14 @@ class UsersPresenter(private var v: UsersContract.View?, private val userReposit
 
     override fun loadNextUsers() {
         launch {
-            if (currentPage < totalPages) {
+            if (nextPage <= totalPages || totalPages == 0) {
                 v?.showLoading()
-                val result = withContext(Dispatchers.IO) { userRepository.getUsers(++currentPage) }
+                val result = withContext(Dispatchers.IO) { userRepository.getUsers(nextPage) }
                 when (result) {
                     is MySuccess -> {
-                        v?.showUsers(result.data.users)
                         totalPages = result.data.totalPage
+                        nextPage++
+                        v?.showUsers(result.data.users)
                     }
                     is MyError -> v?.showDebugMessage(result.exception.localizedMessage)
                 }
