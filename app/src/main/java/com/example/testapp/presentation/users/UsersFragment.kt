@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.BuildConfig
+import com.example.testapp.R
 import com.example.testapp.domain.model.User
 import com.example.testapp.presentation.users.rv.UsersAdapter
 import com.example.testapp.presentation.util.getInitialRecyclerViewLoadCount
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.design.indefiniteSnackbar
 import org.jetbrains.anko.support.v4.longToast
 
 
@@ -23,6 +25,7 @@ class UsersFragment : Fragment(), UsersContract.View {
     private var initialUsersCount = 0
     private var isLoading = false
     private var usersSize = 0
+    private lateinit var parentView: View
 
 
     override var presenter: UsersContract.Presenter? = null
@@ -37,6 +40,7 @@ class UsersFragment : Fragment(), UsersContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        parentView = view
         usersAdapter.apply {
             onLoadMore = {
                 presenter?.loadNextUsers()
@@ -82,6 +86,18 @@ class UsersFragment : Fragment(), UsersContract.View {
             }
         } else {
             isLoading = false
+        }
+    }
+
+    override fun showNoInternetConnection() {
+        parentView.indefiniteSnackbar(R.string.error_no_internet_connection, R.string.retry) {
+            presenter?.loadNextUsers()
+        }
+    }
+
+    override fun showSomeErrorOccured() {
+        parentView.indefiniteSnackbar(R.string.error_undefined, R.string.retry) {
+            presenter?.loadNextUsers()
         }
     }
 

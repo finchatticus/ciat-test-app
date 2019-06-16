@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">TestApp</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Common -->
+    <string name="error_no_internet_connection">No internet connection</string>
+    <string name="error_undefined">Some error occurred</string>
+    <string name="retry">Retry</string>
 </resources>

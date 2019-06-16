@@ -20,6 +20,7 @@ class NetworkHandler private constructor(private var context: Context) {
     private val Context.networkInfo: NetworkInfo? get() =
         (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
-    val isConnected = context.networkInfo?.isConnected ?: false
+    val isConnected
+        get() = context.networkInfo?.isConnected ?: false
 
 }

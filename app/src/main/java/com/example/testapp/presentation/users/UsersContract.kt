@@ -14,6 +14,10 @@ interface UsersContract {
 
         fun showUsers(items: List<User>)
 
+        fun showNoInternetConnection()
+
+        fun showSomeErrorOccured()
+
         fun showUserScreen(idUser: Int)
     }
 
