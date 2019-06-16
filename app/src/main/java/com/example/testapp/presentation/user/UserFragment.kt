@@ -69,7 +69,7 @@ class UserFragment : Fragment(), UserContract.View {
             .transform(PicassoCircleTransform)
             .into(ui.ivAvatar)
         ui.run {
-            tvName.text = "${user.firstName} ${user.lastName}"
+            tvName.text = "${user.firstName} ${user.lastName} #${user.id}"
             tvEmail.text = user.email
         }
     }
