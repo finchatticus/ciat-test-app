@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.testapp.BuildConfig
 import com.example.testapp.R
 import com.example.testapp.domain.model.User
+import com.example.testapp.presentation.main.HasToolbarBackButton
 import com.example.testapp.presentation.util.PicassoCircleTransform
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.AnkoContext
@@ -16,7 +17,7 @@ import org.jetbrains.anko.design.indefiniteSnackbar
 import org.jetbrains.anko.support.v4.longToast
 import org.jetbrains.anko.support.v4.withArguments
 
-class UserFragment : Fragment(), UserContract.View {
+class UserFragment : Fragment(), UserContract.View, HasToolbarBackButton {
 
     companion object {
         private const val ARG_ID_USER = "${BuildConfig.APPLICATION_ID}.ARG_ID_USER"

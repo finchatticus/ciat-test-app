@@ -6,4 +6,10 @@
     <string name="error_no_internet_connection">No internet connection</string>
     <string name="error_undefined">Some error occurred</string>
     <string name="retry">Retry</string>
+
+    <!-- Users -->
+    <string name="user_list_title">Users</string>
+
+    <!-- User -->
+    <string name="user_title">Profile</string>
 </resources>
