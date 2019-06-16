@@ -14,7 +14,7 @@ class UserItemUI : AnkoComponent<ViewGroup> {
     lateinit var tvEmail: TextView
 
     override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
-        linearLayout {
+        linearLayout { //todo(refactoring to constraint layout)
             lparams(width = matchParent, height = wrapContent)
             isClickable = true
             minimumHeight = dimenAttr(R.attr.actionBarSize)

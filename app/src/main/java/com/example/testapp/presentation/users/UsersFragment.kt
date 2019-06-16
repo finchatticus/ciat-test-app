@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.BuildConfig
 import com.example.testapp.R
 import com.example.testapp.domain.model.User
+import com.example.testapp.presentation.user.UserFragment
 import com.example.testapp.presentation.users.rv.UsersAdapter
 import com.example.testapp.presentation.util.getInitialRecyclerViewLoadCount
+import com.example.testapp.presentation.util.replaceFragment
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.design.indefiniteSnackbar
 import org.jetbrains.anko.support.v4.longToast
@@ -95,14 +97,14 @@ class UsersFragment : Fragment(), UsersContract.View {
         }
     }
 
-    override fun showSomeErrorOccured() {
+    override fun showSomeErrorOccurred() {
         parentView.indefiniteSnackbar(R.string.error_undefined, R.string.retry) {
             presenter?.loadNextUsers()
         }
     }
 
     override fun showUserScreen(idUser: Int) {
-        showDebugMessage("id: $idUser")
+        fragmentManager?.replaceFragment(UserFragment.newInstance(idUser))
     }
 
     override fun showDebugMessage(message: String) {

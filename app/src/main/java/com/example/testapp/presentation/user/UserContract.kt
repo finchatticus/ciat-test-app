@@ -1,10 +1,10 @@
-package com.example.testapp.presentation.users
+package com.example.testapp.presentation.user
 
 import com.example.testapp.domain.model.User
 import com.example.testapp.presentation.base.BasePresenter
 import com.example.testapp.presentation.base.BaseView
 
-interface UsersContract {
+interface UserContract {
 
     interface View : BaseView<Presenter> {
 
@@ -12,20 +12,17 @@ interface UsersContract {
 
         fun hideLoading()
 
-        fun showUsers(items: List<User>)
+        fun showUser(user: User)
 
         fun showNoInternetConnection()
 
         fun showSomeErrorOccurred()
 
-        fun showUserScreen(idUser: Int)
     }
 
     interface Presenter : BasePresenter {
 
-        fun loadNextUsers()
-
-        fun openUserScreen(idUser: Int)
+        fun loadUser()
 
     }
 

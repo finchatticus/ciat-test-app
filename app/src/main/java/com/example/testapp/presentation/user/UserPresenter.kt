@@ -1,8 +1,8 @@
-package com.example.testapp.presentation.users
+package com.example.testapp.presentation.user
 
 import com.example.testapp.data.exception.NetworkConnectionError
 import com.example.testapp.data.repository.UserRepositoryImpl
-import com.example.testapp.domain.model.UserList
+import com.example.testapp.domain.model.User
 import com.example.testapp.domain.repository.UserRepository
 import com.example.testapp.domain.source.MyError
 import com.example.testapp.domain.source.MyResult
@@ -10,32 +10,25 @@ import com.example.testapp.domain.source.MySuccess
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class UsersPresenter(private var v: UsersContract.View?, private val userRepository: UserRepository = UserRepositoryImpl) : UsersContract.Presenter, CoroutineScope {
+class UserPresenter(private var v: UserContract.View?, private val idUser: Int, private val userRepository: UserRepository = UserRepositoryImpl) : UserContract.Presenter, CoroutineScope {
 
     private val parentJob = Job()
-    private var nextPage: Int = 1
-    private var totalPages: Int = 0
 
     init {
         v?.presenter = this
     }
 
     override fun start() {
+        loadUser()
     }
 
-    override fun loadNextUsers() {
+    override fun loadUser() {
         launch {
-            if (nextPage <= totalPages || totalPages == 0) {
-                v?.showLoading()
-                withContext(Dispatchers.IO) { userRepository.getUsers(nextPage) }
-                    .updateUsers()
-                v?.hideLoading()
-            }
+            v?.showLoading()
+            withContext(Dispatchers.IO) { userRepository.getUser(idUser) }
+                .updateUser()
+            v?.hideLoading()
         }
-    }
-
-    override fun openUserScreen(idUser: Int) {
-        v?.showUserScreen(idUser)
     }
 
     override fun viewDetached(changingConfigurations: Boolean) {
@@ -47,13 +40,9 @@ class UsersPresenter(private var v: UsersContract.View?, private val userReposit
     override val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Main
 
-    private fun MyResult<UserList>.updateUsers() {
+    private fun MyResult<User>.updateUser() {
         when (this) {
-            is MySuccess -> {
-                totalPages = this.data.totalPage
-                nextPage++
-                v?.showUsers(this.data.users)
-            }
+            is MySuccess -> v?.showUser(this.data)
             is MyError -> when (this.exception) {
                 is NetworkConnectionError -> v?.showNoInternetConnection()
                 else -> v?.showSomeErrorOccurred()
