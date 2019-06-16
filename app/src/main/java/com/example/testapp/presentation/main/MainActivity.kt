@@ -21,7 +21,9 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
         supportFragmentManager.addOnBackStackChangedListener(this)
         ui.setContentView(this)
         setSupportActionBar(ui.toolbar)
-        addFragment { UsersFragment() }
+        addFragment(useFragment = {
+            setupToolbar(it)
+        }) { UsersFragment() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
