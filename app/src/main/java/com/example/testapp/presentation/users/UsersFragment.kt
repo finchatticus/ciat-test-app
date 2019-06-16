@@ -65,7 +65,7 @@ class UsersFragment : Fragment(), UsersContract.View {
 
     override fun onDestroyView() {
         ui.rvUsers.removeOnScrollListener(recyclerViewOnScrollListener)
-        presenter?.viewDetached(false)
+        presenter?.viewDestroyed(false)
         super.onDestroyView()
     }
 

@@ -50,7 +50,7 @@ class UserFragment : Fragment(), UserContract.View {
     }
 
     override fun onDestroyView() {
-        presenter?.viewDetached(false)
+        presenter?.viewDestroyed(false)
         super.onDestroyView()
     }
 

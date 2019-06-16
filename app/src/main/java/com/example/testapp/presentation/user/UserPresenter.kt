@@ -31,10 +31,8 @@ class UserPresenter(private var v: UserContract.View?, private val idUser: Int, 
         }
     }
 
-    override fun viewDetached(changingConfigurations: Boolean) {
+    override fun viewDestroyed(changingConfigurations: Boolean) {
         parentJob.cancel()
-        v?.presenter = null
-        v = null
     }
 
     override val coroutineContext: CoroutineContext

@@ -4,6 +4,6 @@ interface BasePresenter {
 
     fun start()
 
-    fun viewDetached(changingConfigurations: Boolean)
+    fun viewDestroyed(changingConfigurations: Boolean)
 
 }
