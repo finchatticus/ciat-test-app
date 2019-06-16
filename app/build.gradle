@@ -15,10 +15,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "API_URL", '"https://reqres.in"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_URL", '"https://reqres.in"'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -32,6 +40,9 @@ dependencies {
     implementation dependencies.ankoSdk
     implementation dependencies.ankoAppCompat
     implementation dependencies.ankoDesign
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitGson
+    implementation dependencies.okHttpLogging
     testImplementation dependencies.junit
     androidTestImplementation dependencies.runner
     androidTestImplementation dependencies.espresso
