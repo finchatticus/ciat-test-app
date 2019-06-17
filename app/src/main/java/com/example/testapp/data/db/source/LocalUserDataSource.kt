@@ -12,9 +12,7 @@ import com.example.testapp.domain.source.MyResult
 import com.example.testapp.domain.source.MySuccess
 import com.example.testapp.presentation.util.PicassoSaveLocalTarget
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 
 class LocalUserDataSource {
@@ -25,12 +23,15 @@ class LocalUserDataSource {
     private val userDtoToUserMapper: Mapper<UserDto, User> = UserDtoToUserMapper()
 
     fun save(users: List<User>, imageDirectory: File?) {
-        imageDirectory?.run {
-            users.forEach { user ->
-                GlobalScope.launch(Dispatchers.Main) {
-                    Picasso.get()
-                        .load(user.avatarPath)
-                        .into(PicassoSaveLocalTarget(imageDirectory, user.id.toString()))
+        GlobalScope.launch(Dispatchers.IO) {
+            imageDirectory?.run {
+                users.forEach { user ->
+                    delay(200)
+                    withContext(Dispatchers.Main) {
+                        Picasso.get()
+                            .load(user.avatarPath)
+                            .into(PicassoSaveLocalTarget(imageDirectory, user.id.toString()))
+                    }
                 }
             }
         }
