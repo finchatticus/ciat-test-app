@@ -20,7 +20,8 @@ android {
             buildConfigField "String", "API_URL", '"https://reqres.in"'
         }
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_URL", '"https://reqres.in"'
         }
