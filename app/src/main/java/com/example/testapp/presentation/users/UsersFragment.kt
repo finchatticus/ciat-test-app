@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.BuildConfig
 import com.example.testapp.R
 import com.example.testapp.domain.model.User
@@ -25,8 +23,6 @@ class UsersFragment : Fragment(), UsersContract.View {
     private val ui = UsersUI()
     private val usersAdapter = UsersAdapter()
     private var initialUsersCount = 0
-    private var isLoading = false
-    private var usersSize = 0
     private lateinit var parentView: View
 
 
@@ -51,10 +47,7 @@ class UsersFragment : Fragment(), UsersContract.View {
                 presenter?.openUserScreen(it.id)
             }
         }
-        ui.rvUsers.apply {
-            addOnScrollListener(recyclerViewOnScrollListener)
-            adapter = usersAdapter
-        }
+        ui.rvUsers.adapter = usersAdapter
         presenter?.loadNextUsers()
     }
 
@@ -64,7 +57,6 @@ class UsersFragment : Fragment(), UsersContract.View {
     }
 
     override fun onDestroyView() {
-        ui.rvUsers.removeOnScrollListener(recyclerViewOnScrollListener)
         presenter?.viewDestroyed(false)
         super.onDestroyView()
     }
@@ -78,16 +70,15 @@ class UsersFragment : Fragment(), UsersContract.View {
     }
 
     override fun showUsers(items: List<User>) {
-        usersSize += items.size
         usersAdapter.addItems(items, initialUsersCount)
         if (initialUsersCount == 0) {
             ui.rvUsers.post {
                 initialUsersCount = ui.rvUsers.getInitialRecyclerViewLoadCount()
                 presenter?.loadNextUsers()
-                isLoading = true
+                usersAdapter.setLoading(true)
             }
         } else {
-            isLoading = false
+            usersAdapter.setLoading(false)
         }
     }
 
@@ -110,18 +101,6 @@ class UsersFragment : Fragment(), UsersContract.View {
     override fun showDebugMessage(message: String) {
         if (BuildConfig.DEBUG) {
             longToast(message)
-        }
-    }
-
-    private val recyclerViewOnScrollListener = object : RecyclerView.OnScrollListener() {
-
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-            if (!isLoading && linearLayoutManager.findLastCompletelyVisibleItemPosition() == usersSize - 1) {
-                presenter?.loadNextUsers()
-                isLoading = true
-            }
         }
     }
 
