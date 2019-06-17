@@ -65,10 +65,12 @@ class UserFragment : Fragment(), UserContract.View, HasToolbarBackButton {
 
     @SuppressLint("SetTextI18n")
     override fun showUser(user: User) {
-        Picasso.get()
-            .load(user.avatarUrl)
-            .transform(PicassoCircleTransform)
-            .into(ui.ivAvatar)
+        if (user.avatarPath.isNotEmpty()) {
+            Picasso.get()
+                .load(user.avatarPath)
+                .transform(PicassoCircleTransform)
+                .into(ui.ivAvatar)
+        }
         ui.run {
             tvName.text = "${user.firstName} ${user.lastName} #${user.id}"
             tvEmail.text = user.email

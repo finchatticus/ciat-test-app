@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -48,6 +49,9 @@ dependencies {
     implementation dependencies.retrofitGson
     implementation dependencies.okHttpLogging
     implementation dependencies.picasso
+    implementation dependencies.room
+    implementation dependencies.roomKtx
+    kapt dependencies.roomCompiler
     testImplementation dependencies.junit
     androidTestImplementation dependencies.runner
     androidTestImplementation dependencies.espresso

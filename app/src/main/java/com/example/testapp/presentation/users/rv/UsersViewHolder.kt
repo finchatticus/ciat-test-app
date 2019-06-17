@@ -21,10 +21,12 @@ class UsersViewHolder(
             tvName.text = "${user.firstName} ${user.lastName}"
             tvEmail.text = user.email
         }
-        Picasso.get()
-            .load(user.avatarUrl)
-            .transform(PicassoCircleTransform)
-            .into(ui.ivAvatar)
+        if (user.avatarPath.isNotEmpty()) {
+            Picasso.get()
+                .load(user.avatarPath)
+                .transform(PicassoCircleTransform)
+                .into(ui.ivAvatar)
+        }
         itemView.setOnClickListener {
             onUserClickListener?.invoke(user)
         }
