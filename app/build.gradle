@@ -5,6 +5,11 @@ apply plugin: 'kotlin-android-extensions'
 
 def globalConf = rootProject.ext
 
+def signingProperties = "keystore.properties"
+def keystorePropertiesFile = ["${rootDir}/${signingProperties}", "${gradle.gradleUserHomeDir}/${signingProperties}"].find { file(it).exists() }
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -15,11 +20,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     buildTypes {
         debug {
             buildConfigField "String", "API_URL", '"https://reqres.in"'
         }
         release {
+            signingConfig signingConfigs.release
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
