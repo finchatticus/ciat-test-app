@@ -17,10 +17,7 @@ class UsersViewHolder(
 
     @SuppressLint("SetTextI18n")
     fun bind(user: User) {
-        ui.run {
-            tvName.text = "${user.firstName} ${user.lastName}"
-            tvEmail.text = user.email
-        }
+        ui.tvName.text = "${user.firstName} ${user.lastName}"
         if (user.avatarPath.isNotEmpty()) {
             Picasso.get()
                 .load(user.avatarPath)
