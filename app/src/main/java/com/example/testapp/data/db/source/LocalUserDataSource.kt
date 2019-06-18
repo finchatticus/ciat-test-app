@@ -8,6 +8,7 @@ import com.example.testapp.data.db.mapper.UserToUserDtoMapper
 import com.example.testapp.domain.mapper.Mapper
 import com.example.testapp.domain.model.User
 import com.example.testapp.domain.model.UserList
+import com.example.testapp.domain.source.MyError
 import com.example.testapp.domain.source.MyResult
 import com.example.testapp.domain.source.MySuccess
 import com.example.testapp.presentation.util.PicassoSaveLocalTarget
@@ -41,6 +42,8 @@ class LocalUserDataSource {
 
     fun getUsersPerPage(page: Int, perPage: Int): MyResult<UserList> {
         val users = userDtoToUserMapper.map(dao.getPerPage(page))
+        if (users.isEmpty())
+            return MyError(NullPointerException())
         val total = dao.getRowCount()
         val userList = UserList(page, perPage, total, total / perPage, users)
         return MySuccess(userList)

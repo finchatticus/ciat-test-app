@@ -54,6 +54,7 @@ class UsersPresenter(private var v: UsersContract.View?, private val userReposit
             }
             is MyError -> when (this.exception) {
                 is NetworkConnectionError -> v?.showNoInternetConnection()
+                is NullPointerException -> v?.showNoInternetConnection()
                 else -> v?.showSomeErrorOccurred()
             }
         }
